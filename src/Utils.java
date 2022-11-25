@@ -44,17 +44,17 @@ public class Utils {
 
 
     public static void criarProduto(Scanner scan, List<Produto> produtos) {
-        Produto produto = new Produto();
+//        Produto produto = new Produto();
         System.out.println("Digite o nome do Produto: ");
         String nome = scan.nextLine();
         System.out.println("Digite a quantidade do Produto: ");
         String quantidade = scan.nextLine();
         System.out.println("Digite o preco do Produto: ");
         String preco = scan.nextLine();
-        produto.setQuantidade(Integer.parseInt(quantidade));
-        produto.setNome(nome);
-        produto.setPreco(Double.parseDouble(preco));
-        produtos.add(produto);
+//        produto.setQuantidade(Integer.parseInt(quantidade));
+//        produto.setNome(nome);
+//        produto.setPreco(Double.parseDouble(preco));
+//        produtos.add(produto);
     }
     public static void editarProduto(List<Produto> produtos, Scanner scan, Produto produto) {
         System.out.println("Você deseja editar qual produto? Se não deseja remover nada digite 0");
@@ -69,16 +69,16 @@ public class Utils {
         if(respostaEditar == 0){
             System.out.println("Volte pro menu e digite a opção correta.");
         }else {
-            System.out.println("Digite o nome do novo Produto: ");
-            String nome = scan.nextLine();
-            System.out.println("Digite a quantidade do novo Produto: ");
-            String quantidade = scan.nextLine();
-            System.out.println("Digite o preco do novo Produto: ");
-            String preco = scan.nextLine();
-            produto.setQuantidade(Integer.parseInt(quantidade));
-            produto.setNome(nome);
-            produto.setPreco(Double.parseDouble(preco));
-            produtos.set(respostaEditar-1,produto);
+//            System.out.println("Digite o nome do novo Produto: ");
+//            String nome = scan.nextLine();
+//            System.out.println("Digite a quantidade do novo Produto: ");
+//            String quantidade = scan.nextLine();
+//            System.out.println("Digite o preco do novo Produto: ");
+//            String preco = scan.nextLine();
+//            produto.setQuantidade(Integer.parseInt(quantidade));
+//            produto.setNome(nome);
+//            produto.setPreco(Double.parseDouble(preco));
+//            produtos.set(respostaEditar-1,produto);
         }
     }
 
