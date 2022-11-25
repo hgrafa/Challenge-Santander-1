@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package oldFiles;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -6,9 +7,9 @@ public class Utils {
     public static void mostrarMenu(Scanner scan, Produto produto, List<Produto> produtos, List<Produto> produtosFiltrados) {
 
         System.out.println("Olá! Digite a opção que você deseja: ");
-        System.out.println("1 - Cadastrar Produto");
-        System.out.println("2 - Editar Produto");
-        System.out.println("3 - Excluir Produto");
+        System.out.println("1 - Cadastrar oldFiles.Produto");
+        System.out.println("2 - Editar oldFiles.Produto");
+        System.out.println("3 - Excluir oldFiles.Produto");
         System.out.println("4 - Pesquisa de Produtos");
         System.out.println("5 - Compra de Produtos");
         System.out.println("6 - Sair do programa");
@@ -44,12 +45,12 @@ public class Utils {
 
 
     public static void criarProduto(Scanner scan, List<Produto> produtos) {
-//        Produto produto = new Produto();
-        System.out.println("Digite o nome do Produto: ");
+//        oldFiles.Produto produto = new oldFiles.Produto();
+        System.out.println("Digite o nome do oldFiles.Produto: ");
         String nome = scan.nextLine();
-        System.out.println("Digite a quantidade do Produto: ");
+        System.out.println("Digite a quantidade do oldFiles.Produto: ");
         String quantidade = scan.nextLine();
-        System.out.println("Digite o preco do Produto: ");
+        System.out.println("Digite o preco do oldFiles.Produto: ");
         String preco = scan.nextLine();
 //        produto.setQuantidade(Integer.parseInt(quantidade));
 //        produto.setNome(nome);
@@ -69,11 +70,11 @@ public class Utils {
         if(respostaEditar == 0){
             System.out.println("Volte pro menu e digite a opção correta.");
         }else {
-//            System.out.println("Digite o nome do novo Produto: ");
+//            System.out.println("Digite o nome do novo oldFiles.Produto: ");
 //            String nome = scan.nextLine();
-//            System.out.println("Digite a quantidade do novo Produto: ");
+//            System.out.println("Digite a quantidade do novo oldFiles.Produto: ");
 //            String quantidade = scan.nextLine();
-//            System.out.println("Digite o preco do novo Produto: ");
+//            System.out.println("Digite o preco do novo oldFiles.Produto: ");
 //            String preco = scan.nextLine();
 //            produto.setQuantidade(Integer.parseInt(quantidade));
 //            produto.setNome(nome);

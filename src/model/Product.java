@@ -21,31 +21,31 @@ public class Product{
 
             Stream<String> stream = Files.lines(pathOfFile, StandardCharsets.UTF_8);
             stream.forEach(stringProduct -> {
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> product = new HashMap<>();
                 String[] productInfos = stringProduct.split(",");
-                map.put("nome", productInfos[0]);
-                map.put("quantidade", productInfos[1]);
-                map.put("valor", productInfos[2]);
-                productsStock.add(map);
+                product.put("nome", productInfos[0]);
+                product.put("quantidade", productInfos[1]);
+                product.put("valor", productInfos[2]);
+                productsStock.add(product);
 
             });
-            System.out.println(productsStock);
         }
     }
 
     public static void saveStock(){
+
         List<String> toSaveStock = new ArrayList<>();
-        System.out.println(productsStock);
 
         productsStock.forEach(product -> {
             var x = product.get("nome");
             var y = product.get("quantidade");
             var z = product.get("valor");
 
-            toSaveStock.add("" + x + ", " + y + ", "  + z);
+            toSaveStock.add("" + x + "," + y + ","  + z);
         });
 
         try {
+            Files.deleteIfExists(pathOfFile);
             Files.write(pathOfFile, toSaveStock, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
             System.err.println("Erro de arquivo: " + e.getMessage());;
