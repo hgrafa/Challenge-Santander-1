@@ -18,7 +18,6 @@ public class Product{
 
     public static void verifyStock() throws IOException {
         if (Files.exists(pathOfFile)) {
-
             Stream<String> stream = Files.lines(pathOfFile, StandardCharsets.UTF_8);
             stream.forEach(stringProduct -> {
                 Map<String, Object> product = new HashMap<>();
@@ -33,15 +32,14 @@ public class Product{
     }
 
     public static void saveStock(){
-
         List<String> toSaveStock = new ArrayList<>();
 
         productsStock.forEach(product -> {
-            var x = product.get("nome");
-            var y = product.get("quantidade");
-            var z = product.get("valor");
+            var name = product.get("nome").toString().toLowerCase();
+            var quantity = product.get("quantidade");
+            var price = product.get("valor");
 
-            toSaveStock.add("" + x + "," + y + ","  + z);
+            toSaveStock.add("" + name + "," + quantity + ","  + price);
         });
 
         try {

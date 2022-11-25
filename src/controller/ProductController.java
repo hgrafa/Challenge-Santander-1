@@ -9,13 +9,12 @@ import view.ProductView;
  * Productcontroller
  */
 public class ProductController {
-
     ProductView view = new ProductView();
 
     public void menu(){
         Boolean saida = true;
         while(saida){
-            String opcao = view.opcaoMenu();
+            String opcao = view.optionMenu();
 
             switch(opcao){
                 case "1" -> createProduct();
@@ -32,25 +31,35 @@ public class ProductController {
         }
     }
 
-    private void sellProducts() {
-        boolean continueLoop = true;
-        List<Map<String, Object>> products = new ArrayList<>();
-        while(continueLoop){
-            view.listProducts();
-            String[] selectedProduct = view.sellProducts().split(",");
-            Map<String, Object> productInStock = Product.productsStock.get(Integer.parseInt(selectedProduct[0]) - 1);
-            if(Integer.valueOf(productInStock.get("quantidade").toString().trim()) < Integer.parseInt(selectedProduct[1])){
-                System.err.println("Produto em estoque insuficiente. \nTemos quantidade disponível "+ productInStock.get("quantidade")+
-                        " a venda. \nDeseja comprar uma quantidade menor ou outro item? ");
-                String answer = view.answer();
-                if(answer.equals("s")) continue;
-                break;
-            }
-            
-            System.out.println("Deseja algo mais? ");
-            if(view.answer().equals("n")) continueLoop = false;
+    private void createProduct() {
+        while(true){
+            Map<String, Object> product = view.getProductInformation();
+            Product.productsStock.add(product);
+
+            System.out.println("Continuar adicionando produtos? ");
+            if(!view.answer().equals("s")) break;
         }
-        view.listFilteredProducts(products);
+        Product.saveStock();
+    }
+
+    private void editProduct() {
+        String option = view.editProduct();
+
+        if(option.equals("0")){
+            System.out.println("Voltando para o menu. ");
+        } else {
+            Map<String, Object> newProduct = view.getProductInformation();
+            Product.productsStock.get(Integer.parseInt(option) - 1).putAll(newProduct);
+        }
+    }
+
+    private void removeProduct() {
+        String option = view.removeProduct();
+        Product.productsStock.remove(Integer.parseInt(option) - 1);
+    }
+
+    private void listProducts() {
+        view.listProducts();
     }
 
     private void searchProduct() {
@@ -66,28 +75,50 @@ public class ProductController {
         view.listFilteredProducts(filteredProducts);
     }
 
-    private void createProduct() {
-        while(true){
-            Map<String, Object> product = view.getProductInformation();
-            Product.productsStock.add(product);
+    private void sellProducts() {
+        boolean continueLoop = true;
+        List<Map<String, Object>> cart = new ArrayList<>();
+        while(continueLoop){
+            view.listProducts();
+            String[] selectedProduct = view.sellProducts().split(",");
+            Map<String, Object> productInStock = Product.productsStock.get(Integer.parseInt(selectedProduct[0]) - 1);
+            // Verificando se o estoque for igual a zero ou menor que o valor pedido
+            if(         Integer.parseInt(productInStock.get("quantidade").toString().trim()) == 0
+                    ||  Integer.parseInt(productInStock.get("quantidade").toString().trim()) < Integer.parseInt(selectedProduct[1])
+            ){
+                String answer = view.insufficientStock(productInStock);
+                if(answer.equals("s")) continue;
+                break;
+            }
 
-            System.out.println("Continuar adicionando produtos? ");
-            if(!view.answer().equals("s")) break;
+            // Inserido no Map a quantidade desejada na compra
+            productInStock.put("quantidade", (Integer.parseInt(selectedProduct[1])));
+            // Adicionado o produto a lista do carrinho
+            cart.add(productInStock);
+
+            // Método para atualizar a quantidade de itens no estoque
+            updateStock(productInStock);
+
+            String answer = view.newPurchase();
+            if(answer.equals("n")) continueLoop = false;
+        }
+        view.listFilteredProducts(cart);
+    }
+
+    private void updateStock(Map<String, Object> productInStock) {
+        // Map para encontrar o produto a ser atualizado o estoque
+        for(Map<String, Object> product : Product.productsStock){
+            String name = (String) product.get("nome");
+            String searchProduct = (String) productInStock.get("nome");
+
+            // Calculo do novo estoque onde é pego o estoque do arquivo menos o estoque da compra efetuada
+            Integer newStock = Integer.parseInt(product.get("quantidade").toString()) - Integer.parseInt(productInStock.get("quantidade").toString());
+
+            // Ao encontrar o produto correto atualizar a quantidade no arquivo
+            if(name.toLowerCase().equals(searchProduct)){
+                product.put(productInStock.get("quantidade").toString(), String.valueOf(newStock));
+            }
         }
         Product.saveStock();
-    }
-
-    private void listProducts() {
-        view.listProducts();
-    }
-
-    private void removeProduct() {
-        view.removeProduct();
-    }
-
-    private void editProduct() {
-        view.editProduct();
-
-
     }
 }

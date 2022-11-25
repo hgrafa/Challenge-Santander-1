@@ -1,4 +1,4 @@
-maca,10,1
+maca,5,1
 pepino,35,20
 macarrao,2,5.0
 cama,10,3500
@@ -6,3 +6,5 @@ MaSsa,10,5
 pedra,10,1
 PeDaL,10,50
 MarMORe,200,150
+Arroz,5,32
+Zica,5,2
